@@ -10,43 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var random_service_1 = require("./service/random.service");
 var AppComponent = (function () {
-    function AppComponent() {
-        this.name = 'Angular';
+    //@ViewChild('hardware') cameraHardware :any;
+    function AppComponent(svc) {
+        this.svc = svc;
+        this.name = 'Parent';
+        this.num = 0;
     }
-    AppComponent.prototype.videoStart = function () {
-        var video = this.cameraHardware.nativeElement;
-        var nav = navigator;
-        //console.log('nav', nav);
-        nav.getUserMedia = (nav.getUserMedia || nav.webkitGetUserMedia || nav.mozGetUserMedia || nav.msGetUserMedia);
-        console.log('nav', nav);
-        if (nav.getUserMedia) {
-            try {
-                nav.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
-                    video.src = window.URL.createObjectURL(stream);
-                    video.play();
-                });
-            }
-            catch (e) {
-                console.error("videoStart error", e);
-            }
-        }
-        else {
-            alert('Browser does not support navigator.getUserMedia.');
-        }
+    AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.svc.getRandom(100).subscribe(function (result) {
+            console.log('parent', result);
+            _this.num = result;
+        });
     };
     return AppComponent;
 }());
-__decorate([
-    core_1.ViewChild('hardware'),
-    __metadata("design:type", Object)
-], AppComponent.prototype, "cameraHardware", void 0);
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
-        template: "<h1>Hello {{name}}</h1>\n  <button (click) = \"videoStart()\"> Start Video</button>\n  <video #hardware></video>\n  ",
+        template: "\n  \n  <h1>Hello {{name}} : {{num}}</h1>\n  <!--<button (click) = \"videoStart()\"> Start Video</button>\n  <video #hardware></video>-->\n  <test-comp random=\"100\"> </test-comp> \n  <br/>\n  <test-comp> Child 2</test-comp>\n  ",
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [random_service_1.RandomService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

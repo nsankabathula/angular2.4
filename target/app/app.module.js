@@ -9,6 +9,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var app_component_1 = require("./app.component");
+var test_component_1 = require("./test.component");
+var random_service_1 = require("./service/random.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -17,8 +19,9 @@ var AppModule = (function () {
 AppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule],
-        declarations: [app_component_1.AppComponent],
-        bootstrap: [app_component_1.AppComponent]
+        declarations: [app_component_1.AppComponent, test_component_1.TestComponet],
+        bootstrap: [app_component_1.AppComponent],
+        providers: [random_service_1.RandomService]
     })
 ], AppModule);
 exports.AppModule = AppModule;
